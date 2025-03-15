@@ -1,0 +1,36 @@
+ //a)FCFS  
+#include <stdio.h>  
+#include <string.h>  
+void main(){  
+ int arr[10], bs[10], ct[10], tat[10], wt[10];  
+ int n, i;  
+ int time = 0;  
+ float at = 0.0, aw = 0.0;  
+ printf("FCFS Scheduling\n");  
+ printf("Enter the number of jobs : ");  
+ scanf("%d",&n);  
+ for (i = 0; i < n; i++) {  
+ printf("Enter the arrival time of job %d : ", (i+1));  
+ scanf("%d",&arr[i]);  
+ printf("Enter the burst time of job %d : ", (i+1));  
+ scanf("%d",&bs[i]);  
+ }  
+ for (i = 0; i < n; i++) {  
+ time += bs[i];  
+ ct[i] = time;  
+ }  
+ for (i = 0; i < n; i++) 
+ tat[i] = ct[i] - arr[i];  
+ for (i = 0; i < n; i++)  
+ wt[i] = tat[i] - bs[i];  
+ for (i = 0; i < n; i++) {  
+ printf("TAT of job %d is %d\n", (i+1), tat[i]);   
+ at += tat[i];  
+ }  
+ printf("Average TAT of all the jobs is : %f\n",(at/n));   
+ for (i = 0; i < n; i++) {  
+ printf("WT of job %d is %d\n", (i+1), wt[i]);   
+ aw += wt[i];  
+ }  
+ printf("Average WT of all the jobs is : %f\n",(aw/n));  
+ }  
