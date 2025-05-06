@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_BLOCKS 10  // Maximum number of blocks on the disk
+#define MAX_FILES 5    // Maximum number of files
+
+// Function to simulate the sequential allocation of files on the disk
+void sequentialAllocation(int files[], int num_files) {
+    int blocks[MAX_BLOCKS]; // Array representing the disk blocks
+    for (int i = 0; i < MAX_BLOCKS; i++) {
+        blocks[i] = -1;  // Initialize all blocks to -1 (indicating free)
+    }
+
+    int block_index = 0; // Pointer to track the next available block
+
+    // Process each file for sequential allocation
+    for (int i = 0; i < num_files; i++) {
+        if (block_index + files[i] <= MAX_BLOCKS) { // Check if enough space is available
+            printf("Allocating file %d to blocks: ", i + 1);
+            for (int j = block_index; j < block_index + files[i]; j++) {
+                blocks[j] = i + 1; // Mark the block as allocated to file i + 1
+                printf("%d ", j);
+            }
+            printf("\n");
+
+            block_index += files[i]; // Move the pointer to the next available block
+        } else {
+            printf("Not enough space to allocate file %d.\n", i + 1);
+            break; // Stop if no enough space is available
+        }
+    }
+
+    // Print the final status of the disk blocks
+    printf("\nFinal Disk Block Allocation:\n");
+    for (int i = 0; i < MAX_BLOCKS; i++) {
+        if (blocks[i] == -1)
+            printf("Block %d: Free\n", i);
+        else
+            printf("Block %d: File %d\n", i, blocks[i]);
+    }
+}
+
+int main() {
+    int num_files;
+
+    // Input number of files to be allocated
+    printf("Enter the number of files: ");
+    scanf("%d", &num_files);
+
+    // Input the size (in blocks) of each file
+    int files[MAX_FILES];
+    printf("Enter the size (in blocks) of each file:\n");
+    for (int i = 0; i < num_files; i++) {
+        printf("Size of file %d: ", i + 1);
+        scanf("%d", &files[i]);
+    }
+
+    // Call the function to simulate sequential allocation
+    sequentialAllocation(files, num_files);
+
+    return 0;
+}
+
